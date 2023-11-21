@@ -1,0 +1,4 @@
+cvzone==1.4.1
+pyFirmata
+opencv-python
+numpy
