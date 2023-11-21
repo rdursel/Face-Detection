@@ -20,8 +20,8 @@ while (tombolQditekan == False):
 
         for (x, y, w, h) in dafWajah:
             cv2.rectangle(kerangka, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        
-        #print("Jumlah Wajah terdeksi: ", len(dafWajah))
+
+        #print(": ", len(dafWajah))
         teks = "Jumlah Wajah Terdeteksi = " + str(len(dafWajah))
 
         font = cv2.FONT_HERSHEY_SIMPLEX
