@@ -3,10 +3,10 @@ from cvzone.FaceDetectionModule import FaceDetector
 import pyfirmata
 import numpy as np
 
-print("blaaa")
+print('Program started')
 
 cap = cv2.VideoCapture(0)
-#cap = cv2.flip(cap_orig, 0)
+#cap = cv2.flip(cap_orig, 0)python
 ws, hs = 1280, 720
 cap.set(3, ws)
 cap.set(4, hs)
@@ -17,16 +17,15 @@ if not cap.isOpened():
     print("Camera couldn't Access!!!")
     exit()
 
-print("started")
 port = "COM5"
 board = pyfirmata.Arduino(port)
 servo_pinX = board.get_pin('d:9:s') #pin 9 Arduino
 servo_pinY = board.get_pin('d:10:s') #pin 10 Arduino
 
 print('board connected')
-
 detector = FaceDetector()
-print('detector started')
+
+print('Face detector started')
 servoPos = [90, 90] # initial servo position
 while True:
     success, img = cap.read()
@@ -36,7 +35,7 @@ while True:
         #get the coordinate
         fx, fy = bboxs[0]["center"][0], bboxs[0]["center"][1]
         pos = [fx, fy]
-        #convert coordinat to servo degree
+        #convert coordinate to servo degree
         servoX = np.interp(fx, [0, ws], [120, 0])
         servoY = np.interp(fy, [0, hs], [0, 180])
 
