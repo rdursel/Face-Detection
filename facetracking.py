@@ -5,11 +5,11 @@ import numpy as np
 
 print('Program started')
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 #cap = cv2.flip(cap_orig, 0)python
-ws, hs = 1280, 720
-cap.set(3, ws)
-cap.set(4, hs)
+ws, hs = 1280, 1024
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, ws)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, hs)
 
 
 
@@ -36,8 +36,8 @@ while True:
         fx, fy = bboxs[0]["center"][0], bboxs[0]["center"][1]
         pos = [fx, fy]
         #convert coordinate to servo degree
-        servoX = np.interp(fx, [0, ws], [120, 0])
-        servoY = np.interp(fy, [0, hs], [0, 180])
+        servoX = np.interp(fx, [0, ws], [90, 0])
+        servoY = np.interp(fy, [0, hs], [90, 180])
 
         if servoX < 0:
             servoX = 0
