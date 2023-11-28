@@ -17,13 +17,16 @@ if not cap.isOpened():
     print("Camera couldn't Access!!!")
     exit()
 
-port = "COM5"
+port = "COM7"
 board = pyfirmata.Arduino(port)
 servo_pinX = board.get_pin('d:9:s') #pin 9 Arduino
 servo_pinY = board.get_pin('d:10:s') #pin 10 Arduino
+laser_pin = board.digital[8] #pin 8 Arduino
 
 print('board connected')
 detector = FaceDetector()
+
+laser_pin.write(0)
 
 print('Face detector started')
 servoPos = [90, 90] # initial servo position
@@ -51,7 +54,7 @@ while True:
         servoPos[0] = servoX
         servoPos[1] = servoY
 
-
+        laser_pin.write(1)
         cv2.circle(img, (fx, fy), 80, (0, 0, 255), 2)
         cv2.putText(img, str(pos), (fx+15, fy-15), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2 )
         cv2.line(img, (0, fy), (ws, fy), (0, 0, 0), 2)  # x line
@@ -60,6 +63,7 @@ while True:
         cv2.putText(img, "TARGET LOCKED", (850, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3 )
 
     else:
+        laser_pin.write(0)
         cv2.putText(img, "NO TARGET", (880, 50), cv2.FONT_HERSHEY_PLAIN, 3, (0, 0, 255), 3)
         cv2.circle(img, (640, 360), 80, (0, 0, 255), 2)
         cv2.circle(img, (640, 360), 15, (0, 0, 255), cv2.FILLED)
